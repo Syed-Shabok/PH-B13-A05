@@ -19,6 +19,15 @@
       type="text/css"
     />
 
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,10 +38,43 @@
 
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
-  <body class="bg-[#F8FAFC] h-screen flex items-center justify-center">
-    <h1>This is the Home Page</h1>
+  <body>
+    <header>
+      <div class="navbar bg-base-100 shadow-sm">
+        <div
+          class="flex flex-col md:flex-row items-center gap-3 w-11/12 mx-auto"
+        >
+          <div class="flex-1">
+            <a class="btn btn-ghost text-lg md:text-xl">
+              <div class="flex items-center justify-center gap-1">
+                <img
+                  src="./assets/github-logo.png"
+                  class="w-6 md:w-8"
+                  alt="GitHub Logo Icon"
+                />
+                GitHub Issues Tracker
+              </div>
+            </a>
+          </div>
+          <div class="flex gap-3">
+            <label class="input">
+              <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+              <input
+                id="search-bar"
+                type="search"
+                class="grow"
+                placeholder="Search Issues..."
+              />
+            </label>
+
+            <button id="add-issue-btn" class="btn btn-primary">
+              <i class="fa-solid fa-plus"></i>New Issue
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
 
     <script src="./scripts/scripts.js"></script>
-    <script src="./scripts/login.js"></script>
   </body>
 </html>
