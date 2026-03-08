@@ -43,31 +43,31 @@
         <p class="text-[#64748B text-base">Sign in to manage your issues</p>
       </div>
 
-      <label class="label text-black font-medium text-base">Username</label>
+      <label class="label text-black font-medium text-sm">Username</label>
       <input
+        id="username"
         type="text"
-        class="input w-full text-base py-6 rounded-lg"
+        class="input w-full rounded-lg"
         placeholder="Enter Username"
       />
-      <p class="text-[#4A00FF] text-sm mb-2">Default: admin</p>
+      <p class="text-[#4A00FF] mb-2">Default: admin</p>
 
-      <label class="label text-black font-medium text-base">Password</label>
+      <label class="label text-black font-medium text-sm">Password</label>
       <input
+        id="password"
         type="password"
-        class="input w-full text-base py-6 rounded-lg"
+        class="input w-full rounded-lg"
         placeholder="Enter Password"
       />
-      <p class="text-[#4A00FF] text-sm">Default: admin123</p>
+      <p class="text-[#4A00FF]">Default: admin123</p>
 
-      <button
-        class="btn btn-primary bg-[#4A00FF] rounded-lg text-base py-6 mt-4"
-      >
+      <button id="signin-btn" class="btn btn-primary rounded-lg mt-4">
         Sign in
       </button>
 
       <div class="flex items-center my-4">
         <hr class="flex-1 border-1 border-gray-300" />
-        <p class="mx-2 text-[#1F2937] text-base">OR</p>
+        <p class="mx-2 text-[#1F2937]">OR</p>
         <hr class="flex-1 border-1 border-gray-300" />
       </div>
 
@@ -79,5 +79,8 @@
         </div>
       </div>
     </fieldset>
+
+    <script src="./scripts/scripts.js"></script>
+    <script src="./scripts/login.js"></script>
   </body>
 </html>
