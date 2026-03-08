@@ -38,8 +38,9 @@
 
     <link rel="stylesheet" href="./styles/style.css" />
   </head>
-  <body>
-    <header>
+  <body class="bg-[#F8FAFC] min-h-screen">
+    <!-- Navbar -->
+    <header class="mb-10">
       <div class="navbar bg-base-100 shadow-sm">
         <div
           class="flex flex-col md:flex-row items-center gap-3 w-11/12 mx-auto"
@@ -74,6 +75,112 @@
         </div>
       </div>
     </header>
+
+    <main class="space-y-5 pb-10">
+      <!-- Toggle Buttons Section -->
+      <section
+        class="w-11/12 md:w-3/4 mx-auto p-5 rounded-lg space-x-2 bg-base-100 shadow-sm flex"
+      >
+        <button id="all-btn" class="btn btn-outline md:w-30">All</button>
+        <button id="open-btn" class="btn btn-outline md:w-30">Open</button>
+        <button id="closed-btn" class="btn btn-outline md:w-30">Closed</button>
+      </section>
+
+      <!-- Issues Section -->
+      <section
+        class="w-11/12 md:w-3/4 mx-auto rounded-lg space-x-1 bg-base-100 shadow-sm"
+      >
+        <!-- Part that displays no. of issues -->
+        <div
+          class="flex flex-col md:flex-row justify-between md:items-center p-5 gap-5"
+        >
+          <div class="flex items-center gap-2">
+            <div class="bg-purple-100 p-2 rounded-full">
+              <img src="./assets/Aperture.png" alt="Aperture Icon" />
+            </div>
+            <div>
+              <h2 id="no-of-issues" class="text-lg font-semibold">50 Issues</h2>
+              <p class="text-sm text-gray-500">
+                Track and manage your project issues
+              </p>
+            </div>
+          </div>
+
+          <div class="flex ml-2 gap-4">
+            <div class="flex items-center justify-center gap-2">
+              <div class="p-[0.3rem] rounded-full bg-green-500"></div>
+              <p class="text-base font-medium">Open</p>
+            </div>
+            <div class="flex items-center justify-center gap-2">
+              <div class="p-[0.3rem] rounded-full bg-purple-500"></div>
+              <p class="text-base font-medium">Closed</p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="w-full border border-gray-200" />
+
+        <!-- Part where Issue Cards are rendered -->
+        <div class="p-5 grid grid-cols-4 gap-4 bg-[#FBFBFB]">
+          <!-- Issue Card -->
+          <div
+            id="issue-card"
+            class="rounded-md bg-base-100 shadow-md border-t-4 border-green-500"
+          >
+            <!-- Card Top Part-->
+            <div class="p-5 border-b-1 border-gray-300 space-y-4">
+              <!-- Status and Priority -->
+              <div class="flex justify-between">
+                <a href="">
+                  <img
+                    src="./assets/Open-Status.png"
+                    class="status-icon"
+                    alt="Open Status Icon"
+                  />
+                </a>
+
+                <div
+                  class="priority-badge badge badge-soft badge-error px-5 rounded-xl font-medium"
+                >
+                  High
+                </div>
+              </div>
+
+              <!-- Title and Description -->
+              <div class="space-y-1">
+                <h2 class="issue-title font-semibold">
+                  Fix navigation menu on mobile devices
+                </h2>
+                <p class="issue-description text-xs">
+                  The navigation menu doesn't collapse properly on mobile
+                  devices...
+                </p>
+              </div>
+
+              <!-- Topic -->
+              <div class="issue-topics">
+                <div
+                  class="badge badge-soft badge-error px-5 rounded-xl font-medium border-red-500"
+                >
+                  BUG
+                </div>
+                <div
+                  class="badge badge-soft badge-warning px-5 rounded-xl font-medium border-yellow-500"
+                >
+                  HELP WANTED
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Bottom Part -->
+            <div class="p-5 text-sm text-gray-500 space-y-1">
+              <p class="issue-author">#1 by john_doe</p>
+              <p class="issue-date">1/15/2024</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
 
     <script src="./scripts/scripts.js"></script>
   </body>
