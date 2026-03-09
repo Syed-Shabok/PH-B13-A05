@@ -6,6 +6,7 @@ const noOfIssues = document.getElementById("no-of-issues");
 const issueModal = document.getElementById("issue_modal");
 const modalContent = document.getElementById("modal-content");
 const searchBar = document.getElementById("search-bar");
+const addIssueBtn = document.getElementById("add-issue-btn");
 
 // Fetches User Input.
 const getValueFromInputField = (id) => {
@@ -231,12 +232,12 @@ const showIssueModal = async (id) => {
               </div>
 
               <!-- Priority -->
-              <div class="flex flex-col pr-40">
+              <div class="flex flex-col  pr-8 md:pr-40">
                 <p class="issue-description text-sm text-gray-500">Priority:</p>
 
                 <div
                   id="modal-priority"
-                  class="priority-badge badge ${issueData.priority === "high" ? "badge-error" : issueData.priority === "medium" ? "badge-warning" : "badge-neutral"} text-white px-5 rounded-xl capitalize"
+                  class="priority-badge badge ${issueData.priority === "high" ? "badge-error" : issueData.priority === "medium" ? "badge-warning" : "badge-neutral"} text-white  px-5 rounded-xl capitalize"
                 >
                   ${issueData.priority}
                 </div>
@@ -281,12 +282,30 @@ issuesContainer.addEventListener("click", (event) => {
   }
 });
 
+// Handles User Input from the Search Bar.
+const handleSearch = () => {
+  const userInput = searchBar.value.trim();
+
+  if (!userInput) {
+    alert("Invalid Input.");
+    searchBar.value = "";
+    return;
+  }
+
+  searchIssue(userInput);
+};
+
 // Handles Search Bar User Inputs.
 searchBar.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
     // console.log(`User Input: ${searchBar.value}`);
-    searchIssue(searchBar.value);
+    handleSearch();
   }
+});
+
+// NOTE: There is no Search Button given the figma design blueprint. I was advised by one of the instructors on the Help Desk to use the +New Issue button as a Search Button instead, for this project. This function does that job.
+addIssueBtn.addEventListener("click", () => {
+  handleSearch();
 });
 
 loadIssues();
