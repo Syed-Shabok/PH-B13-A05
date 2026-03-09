@@ -5,6 +5,7 @@ const loadingSpinner = document.getElementById("spinner");
 const noOfIssues = document.getElementById("no-of-issues");
 const issueModal = document.getElementById("issue_modal");
 const modalContent = document.getElementById("modal-content");
+const searchBar = document.getElementById("search-bar");
 
 // Fetches User Input.
 const getValueFromInputField = (id) => {
@@ -32,6 +33,11 @@ const loadIssues = async () => {
 const displayIssues = async (issues) => {
   //   console.log(issues)
   updateNoOfIssues(issues.length);
+
+  if (issues.length === 0) {
+    issuesContainer.innerHTML = `<p>No Matching Issues Were Found</p>`;
+    return;
+  }
 
   for (const issue of issues) {
     const labelDom = await fetchLabels(issue.id);
@@ -145,14 +151,20 @@ const selectStatus = async (status, btnId) => {
 
 // Highlights Selected Button.
 const highlightBtn = (id) => {
-  const toggleBtns = document.querySelectorAll(".toggle-btn");
   const selectedBtn = document.getElementById(id);
+
+  removeBtnHighlight();
+
+  selectedBtn.classList.add("bg-[#4A00FF]", "text-white");
+};
+
+// Removes Highlight from all Toggle Buttons.
+const removeBtnHighlight = () => {
+  const toggleBtns = document.querySelectorAll(".toggle-btn");
 
   toggleBtns.forEach((btn) => {
     btn.classList.remove("bg-[#4A00FF]", "text-white");
   });
-
-  selectedBtn.classList.add("bg-[#4A00FF]", "text-white");
 };
 
 // Displays Issue Modal for a given Issue.
@@ -241,6 +253,23 @@ const showIssueModal = async (id) => {
   issueModal.showModal();
 };
 
+// Manages Custom Issue Searches by the User.
+const searchIssue = async (userInput) => {
+  console.log(`User Input: ${userInput}`);
+  removeBtnHighlight();
+
+  showLoadingSpinner(true);
+
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${userInput}`,
+  );
+  const json = await res.json();
+
+  issuesContainer.innerHTML = "";
+  showLoadingSpinner(false);
+  displayIssues(json.data);
+};
+
 // Handles Click and View for each Issue Card.
 issuesContainer.addEventListener("click", (event) => {
   if (event.target.closest(".issue-card")) {
@@ -249,6 +278,14 @@ issuesContainer.addEventListener("click", (event) => {
     const issueId = targetId.split("-")[1];
     // console.log(`Selected issue card id is: ${issueId}`);
     showIssueModal(issueId);
+  }
+});
+
+// Handles Search Bar User Inputs.
+searchBar.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    // console.log(`User Input: ${searchBar.value}`);
+    searchIssue(searchBar.value);
   }
 });
 
