@@ -3,6 +3,8 @@ console.log("Script.js Is Working...");
 const issuesContainer = document.getElementById("issues-container");
 const loadingSpinner = document.getElementById("spinner");
 const noOfIssues = document.getElementById("no-of-issues");
+const issueModal = document.getElementById("issue_modal");
+const modalContent = document.getElementById("modal-content");
 
 // Fetches User Input.
 const getValueFromInputField = (id) => {
@@ -34,7 +36,8 @@ const displayIssues = async (issues) => {
   for (const issue of issues) {
     const labelDom = await fetchLabels(issue.id);
     const issueCard = document.createElement("div");
-    issueCard.className = `rounded-md bg-base-100 shadow-md border-t-4 ${issue.status === "open" ? "border-green-500" : "border-purple-500"}  flex flex-col`;
+    issueCard.id = `issue-${issue.id}`;
+    issueCard.className = `issue-card rounded-md bg-base-100 shadow-md border-t-4 ${issue.status === "open" ? "border-green-500" : "border-purple-500"}  flex flex-col cursor-pointer`;
     issueCard.innerHTML = `<!-- Card Top Part-->
             <div class="p-5 border-b-1 border-gray-300 space-y-4 flex-1">
               <!-- Status and Priority -->
@@ -151,5 +154,102 @@ const highlightBtn = (id) => {
 
   selectedBtn.classList.add("bg-[#4A00FF]", "text-white");
 };
+
+// Displays Issue Modal for a given Issue.
+const showIssueModal = async (id) => {
+  const res = await fetch(
+    `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`,
+  );
+  const json = await res.json();
+  const issueData = json.data;
+  //   console.log(issueData);
+
+  const issueLabelsHtml = await fetchLabels(id);
+
+  modalContent.innerHTML = `<h3 id="model-title" class="text-2xl font-bold">
+              ${issueData.title}
+            </h3>
+
+            <div class="flex gap-6">
+              <!-- Status Badge -->
+              <div
+                id="modal-status"
+                class="priority-badge badge ${issueData.status === "open" ? "badge-success" : "badge-primary"} px-5 rounded-xl font-medium text-white capitalize"
+              >
+                ${issueData.status === "open" ? "Open" : "Closed"}
+              </div>
+
+              <ul
+                class="flex items-center gap-6 list-disc text-xs text-gray-500"
+              >
+                <li>
+                  <p id="modal-author" class="issue-author">
+                    Opened by ${issueData.author}
+                  </p>
+                </li>
+                <li><p id="modal-date" class="issue-date">${new Date(issueData.createdAt).toLocaleDateString("en-US")}</p></li>
+              </ul>
+            </div>
+
+            <!-- Topic Badges -->
+            <div id="modal-badges" class="issue-topics flex flex-wrap gap-2">
+              ${issueLabelsHtml}
+            </div>
+
+            <p
+              id="model-description"
+              class="issue-description text-base text-gray-500"
+            >
+              ${issueData.description}
+            </p>
+
+            <div
+              class="flex justify-between items-center bg-[#F8FAFC] p-4 rounded-md"
+            >
+              <!-- Assignee -->
+              <div class="flex flex-col">
+                <p class="issue-description text-sm text-gray-500">Assignee:</p>
+
+                <p
+                  id="modal-assignee"
+                  class="issue-description text-base font-semibold"
+                >
+                  ${issueData.assignee === "" ? "Not yet assigned" : issueData.assignee}
+                </p>
+              </div>
+
+              <!-- Priority -->
+              <div class="flex flex-col pr-40">
+                <p class="issue-description text-sm text-gray-500">Priority:</p>
+
+                <div
+                  id="modal-priority"
+                  class="priority-badge badge ${issueData.priority === "high" ? "badge-error" : issueData.priority === "medium" ? "badge-warning" : "badge-neutral"} text-white px-5 rounded-xl capitalize"
+                >
+                  ${issueData.priority}
+                </div>
+              </div>
+            </div>
+
+            <div class="modal-action">
+              <form method="dialog">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn btn-primary">Close</button>
+              </form>
+            </div>`;
+
+  issueModal.showModal();
+};
+
+// Handles Click and View for each Issue Card.
+issuesContainer.addEventListener("click", (event) => {
+  if (event.target.closest(".issue-card")) {
+    const targetCard = event.target.closest(".issue-card");
+    const targetId = targetCard.id;
+    const issueId = targetId.split("-")[1];
+    // console.log(`Selected issue card id is: ${issueId}`);
+    showIssueModal(issueId);
+  }
+});
 
 loadIssues();
