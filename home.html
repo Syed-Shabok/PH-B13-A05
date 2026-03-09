@@ -121,15 +121,18 @@
         <hr class="w-full border border-gray-200" />
 
         <!-- Part where Issue Cards are rendered -->
-        <div class="p-5 grid md:grid-cols-2 xl:grid-cols-4 gap-4 bg-[#FBFBFB]">
+        <div
+          id="issues-container"
+          class="p-5 grid md:grid-cols-2 xl:grid-cols-4 gap-4 bg-[#FBFBFB]"
+        >
           <!-- Issue Card -->
-          <div
+          <!-- <div
             id="issue-card"
             class="rounded-md bg-base-100 shadow-md border-t-4 border-green-500"
           >
-            <!-- Card Top Part-->
+         
             <div class="p-5 border-b-1 border-gray-300 space-y-4">
-              <!-- Status and Priority -->
+           
               <div class="flex justify-between">
                 <a href="">
                   <img
@@ -146,18 +149,18 @@
                 </div>
               </div>
 
-              <!-- Title and Description -->
+             
               <div class="space-y-1">
                 <h2 class="issue-title font-semibold">
                   Fix navigation menu on mobile devices
                 </h2>
-                <p class="issue-description text-xs">
+                <p class="issue-description text-xs line-clamp-2">
                   The navigation menu doesn't collapse properly on mobile
                   devices...
                 </p>
               </div>
 
-              <!-- Topic -->
+             
               <div class="issue-topics">
                 <div
                   class="badge badge-soft badge-error px-5 rounded-xl font-medium border-red-500"
@@ -172,12 +175,12 @@
               </div>
             </div>
 
-            <!-- Card Bottom Part -->
+           
             <div class="p-5 text-sm text-gray-500 space-y-1">
               <p class="issue-author">#1 by john_doe</p>
               <p class="issue-date">1/15/2024</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </section>
     </main>
