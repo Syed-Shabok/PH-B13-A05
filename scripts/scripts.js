@@ -2,6 +2,7 @@ console.log("Script.js Is Working...");
 
 const issuesContainer = document.getElementById("issues-container");
 const loadingSpinner = document.getElementById("spinner");
+const noOfIssues = document.getElementById("no-of-issues");
 
 // Fetches User Input.
 const getValueFromInputField = (id) => {
@@ -13,6 +14,7 @@ const getValueFromInputField = (id) => {
 // Fetches all the Issues from API.
 const loadIssues = async () => {
   showLoadingSpinner(true);
+  issuesContainer.innerHTML = "";
 
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
@@ -27,6 +29,7 @@ const loadIssues = async () => {
 // Displays a given Array of Issues.
 const displayIssues = async (issues) => {
   //   console.log(issues)
+  updateNoOfIssues(issues.length);
 
   for (const issue of issues) {
     const labelDom = await fetchLabels(issue.id);
@@ -104,9 +107,49 @@ const fetchLabels = async (issueId) => {
 const showLoadingSpinner = (isLoading) => {
   if (isLoading) {
     loadingSpinner.classList.remove("hidden");
+    issuesContainer.classList.add("hidden");
   } else {
     loadingSpinner.classList.add("hidden");
+    issuesContainer.classList.remove("hidden");
   }
+};
+
+// Updates the Number of Issues.
+const updateNoOfIssues = (amount) => {
+  noOfIssues.innerHTML = `${amount} Issues`;
+};
+
+// Loads Issues Based on its Status.
+const selectStatus = async (status, btnId) => {
+  //   console.log(`${status} status selected`);
+  highlightBtn(btnId);
+  issuesContainer.innerHTML = "";
+
+  showLoadingSpinner(true);
+
+  const res = await fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues",
+  );
+  const issueData = await res.json();
+  const issues = issueData.data;
+
+  showLoadingSpinner(false);
+
+  const filteredIssues = issues.filter((issue) => issue.status === status);
+
+  displayIssues(filteredIssues);
+};
+
+// Highlights Selected Button.
+const highlightBtn = (id) => {
+  const toggleBtns = document.querySelectorAll(".toggle-btn");
+  const selectedBtn = document.getElementById(id);
+
+  toggleBtns.forEach((btn) => {
+    btn.classList.remove("bg-[#4A00FF]", "text-white");
+  });
+
+  selectedBtn.classList.add("bg-[#4A00FF]", "text-white");
 };
 
 loadIssues();

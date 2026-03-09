@@ -81,9 +81,27 @@
       <section
         class="w-11/12 md:w-3/4 mx-auto p-5 rounded-lg space-x-2 bg-base-100 shadow-sm flex"
       >
-        <button id="all-btn" class="btn btn-outline md:w-30">All</button>
-        <button id="open-btn" class="btn btn-outline md:w-30">Open</button>
-        <button id="closed-btn" class="btn btn-outline md:w-30">Closed</button>
+        <button
+          id="all-btn"
+          onclick="(loadIssues(), highlightBtn('all-btn'))"
+          class="btn btn-outline md:w-30 toggle-btn bg-[#4A00FF] text-white"
+        >
+          All
+        </button>
+        <button
+          id="open-btn"
+          onclick="selectStatus('open', 'open-btn')"
+          class="btn btn-outline md:w-30 toggle-btn"
+        >
+          Open
+        </button>
+        <button
+          id="closed-btn"
+          onclick="selectStatus('closed', 'closed-btn')"
+          class="btn btn-outline md:w-30 toggle-btn"
+        >
+          Closed
+        </button>
       </section>
 
       <!-- Issues Section -->
@@ -121,71 +139,20 @@
         <hr class="w-full border border-gray-200" />
 
         <!-- Part where Issue Cards are rendered -->
-        <div
-          id="issues-container"
-          class="p-5 grid md:grid-cols-2 xl:grid-cols-4 gap-4 bg-[#FBFBFB] h-80"
-        >
-          <!-- Issue Card -->
-          <!-- <div
-            id="issue-card"
-            class="rounded-md bg-base-100 shadow-md border-t-4 border-green-500"
-          >
-         
-            <div class="p-5 border-b-1 border-gray-300 space-y-4">
-           
-              <div class="flex justify-between">
-                <a href="">
-                  <img
-                    src="./assets/Open-Status.png"
-                    class="status-icon"
-                    alt="Open Status Icon"
-                  />
-                </a>
 
-                <div
-                  class="priority-badge badge badge-soft badge-error px-5 rounded-xl font-medium"
-                >
-                  High
-                </div>
-              </div>
-
-             
-              <div class="space-y-1">
-                <h2 class="issue-title font-semibold">
-                  Fix navigation menu on mobile devices
-                </h2>
-                <p class="issue-description text-xs line-clamp-2">
-                  The navigation menu doesn't collapse properly on mobile
-                  devices...
-                </p>
-              </div>
-
-             
-              <div class="issue-topics">
-                <div
-                  class="badge badge-soft badge-error px-5 rounded-xl font-medium border-red-500"
-                >
-                  BUG
-                </div>
-                <div
-                  class="badge badge-soft badge-warning px-5 rounded-xl font-medium border-yellow-500"
-                >
-                  HELP WANTED
-                </div>
-              </div>
-            </div>
-
-           
-            <div class="p-5 text-sm text-gray-500 space-y-1">
-              <p class="issue-author">#1 by john_doe</p>
-              <p class="issue-date">1/15/2024</p>
-            </div>
-          </div> -->
-
+        <!-- Loading Spinner -->
+        <div class="flex items-center justify-center bg-[#FBFBFB]">
           <span
             id="spinner"
-            class="loading loading-ring loading-xl mx-auto my-auto col-span-full"
+            class="loading loading-bars loading-xl mx-auto my-auto col-span-full hidden py-40"
           ></span>
+        </div>
+
+        <div
+          id="issues-container"
+          class="p-5 grid md:grid-cols-2 xl:grid-cols-4 gap-4 bg-[#FBFBFB]"
+        >
+          <!-- Issue Cards are Rendered here -->
         </div>
       </section>
     </main>
