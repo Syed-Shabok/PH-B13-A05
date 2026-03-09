@@ -1,6 +1,7 @@
 console.log("Script.js Is Working...");
 
 const issuesContainer = document.getElementById("issues-container");
+const loadingSpinner = document.getElementById("spinner");
 
 // Fetches User Input.
 const getValueFromInputField = (id) => {
@@ -11,10 +12,14 @@ const getValueFromInputField = (id) => {
 
 // Fetches all the Issues from API.
 const loadIssues = async () => {
+  showLoadingSpinner(true);
+
   const res = await fetch(
     "https://phi-lab-server.vercel.app/api/v1/lab/issues",
   );
   const issueData = await res.json();
+
+  showLoadingSpinner(false);
 
   displayIssues(issueData.data);
 };
@@ -91,8 +96,17 @@ const fetchLabels = async (issueId) => {
                 </div> `;
   });
 
-  console.log(domText);
+  //   console.log(domText);
   return domText;
+};
+
+// Shows Loading Spinner.
+const showLoadingSpinner = (isLoading) => {
+  if (isLoading) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
 };
 
 loadIssues();
